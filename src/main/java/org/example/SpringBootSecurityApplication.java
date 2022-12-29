@@ -16,11 +16,11 @@ public class SpringBootSecurityApplication {
         SpringApplication.run(SpringBootSecurityApplication.class, args);
     }
 
-    @Bean
-    public CommandLineRunner commandLineRunner(UserRepository user, PasswordEncoder encoder){
-        return args -> {
-            user.save(new User("user","user@gmail.com",encoder.encode("password"),"USER"));
-            user.save(new User("admin","admin@gmail.com",encoder.encode("password"),"ADMIN"));
-        };
-    }
+//    @Bean
+//    public CommandLineRunner commandLineRunner(UserRepository user, PasswordEncoder encoder){
+//        return args -> {
+//            user.save(new User("user","user@gmail.com",encoder.encode("password"),"USER"));
+//            user.save(new User("admin","admin@gmail.com",encoder.encode("password"),"ADMIN"));
+//        };
+//    }
 }

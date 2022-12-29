@@ -2,7 +2,7 @@ package org.example.models;
 
 import jakarta.persistence.*;
 import jakarta.persistence.GenerationType;
-import lombok.Data;
+import jakarta.validation.constraints.NotEmpty;
 
 //@Data
 @Entity
@@ -50,18 +50,17 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public void setRoles(String roles) {
-        this.role = roles;
+    public void setRole(String role) {
+        this.role = role;
     }
-    public String getRoles() {
+    public String getRole() {
         return role;
     }
 
-    @Override
-    public String toString() {
+    public String toString(@NotEmpty String username) {
         return "User{" +
                 "userid=" + userid +
-                ", username='" + username + '\'' +
+                ", username='" + this.username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", roles='" + role + '\'' +
