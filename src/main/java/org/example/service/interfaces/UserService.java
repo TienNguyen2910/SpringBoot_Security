@@ -9,5 +9,6 @@ import java.util.Optional;
 
 public interface UserService {
     public void saveUser(UserDTO userDTO);
+    public void UpdateUser(UserDTO userDTO);
     public Optional<User> findUserByEmail(String email);
 }

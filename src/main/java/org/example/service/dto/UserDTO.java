@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
-    private int id;
+    private int userid;
     @NotEmpty
     private String username;
     @NotEmpty(message = "Email should npt be empty")

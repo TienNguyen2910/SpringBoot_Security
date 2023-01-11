@@ -2,12 +2,11 @@ package org.example.controller;
 
 import jakarta.validation.Valid;
 import org.example.models.User;
+import org.example.service.UserRepository;
 import org.example.service.dto.UserDTO;
 import org.example.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,7 +19,8 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private UserRepository userRepository;
     @GetMapping("/login")
     public String login(){
         ModelAndView modelAndView = new ModelAndView("login");
@@ -44,11 +44,28 @@ public class UserController {
             return "redirect:/register?fail";
         }
         userService.saveUser(userDTO);
-        return "redirect:/login?success";
+        return "redirect:/hello";
     }
-    @PreAuthorize("hasRole('USER'),hasRole('ADMIN')")
+
     @PostMapping("/hello")
-    public ModelAndView user(){
-        return new ModelAndView("hello");
+    public String index(Model model){
+        model.addAttribute("users",userRepository.findAll());
+        return "hello";
+    }
+    @GetMapping("/hello")
+    public String listUsers(Model model){
+        model.addAttribute("users",userRepository.findAll());
+        return "hello";
+    }
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable(name = "id") Integer id, Model model){
+        User user = userRepository.getReferenceById(id);
+        model.addAttribute("user",user);
+        return "update";
+    }
+    @PostMapping("/saveUpdate")
+    public String saveUpdate( @ModelAttribute("user") UserDTO userDTO, Model model){
+       userService.UpdateUser(userDTO);
+       return "redirect:/hello";
     }
 }
