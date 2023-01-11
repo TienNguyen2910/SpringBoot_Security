@@ -9,16 +9,15 @@ import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig {
+public class WebSecurityConfig  {
     //CustomUserDetails
     @Autowired
     private CustomUserDetails userDetails;
@@ -35,7 +34,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/register/**").permitAll()
+                .requestMatchers("/register/**","/", "/static/**", "/css/**", "/js/**","/images/**","/vendor/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -51,6 +50,7 @@ public class WebSecurityConfig {
                 .logoutSuccessUrl("/login?logout");
         return http.build();
     }
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetails)

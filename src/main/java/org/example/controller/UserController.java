@@ -21,6 +21,10 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+    @GetMapping("/")
+    public String index(){
+        return "index";
+    }
     @GetMapping("/login")
     public String login(){
         ModelAndView modelAndView = new ModelAndView("login");
@@ -48,7 +52,7 @@ public class UserController {
     }
 
     @PostMapping("/hello")
-    public String index(Model model){
+    public String hello(Model model){
         model.addAttribute("users",userRepository.findAll());
         return "hello";
     }
